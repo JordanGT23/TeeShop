@@ -7,7 +7,7 @@
 	<h1 class="text-center mt-4">Tableau de bord</h1>
 
 	<div class="row">
-		<div class="col-10 mx-auto my-4">
+		<div class="col-11 mx-auto my-4">
 
 			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 				<li class="nav-item" role="presentation">
@@ -20,7 +20,7 @@
 					<button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Commandes</button>
 				</li>
                 <li class="nav-item ms-auto" role="presentation">
-                    <a class="btn btn-success" href="#"><i class="bi bi-plus-circle"></i> Ajouter un produit</a>
+                    <a class="btn btn-success" href="{{ path('create_product') }}"><i class="bi bi-plus-circle"></i> Ajouter un produit</a>
                 </li>
 			</ul>
 			<div class="tab-content" id="pills-tabContent">
@@ -44,6 +44,28 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {% for product in products %}
+
+                                <tr class="text-center aling-middle">
+                                    <td>{{ product.id }}</td>
+                                    <td>{{ product.title | capitalize }}</td>
+                                    <td>{{ product.descript | length > 25 ? product.descript | slice(0, 25) ~ '...' : product.descript }}</td>
+                                    <td>{{ product.color }}</td>
+                                    <td>{{ product.size | upper }}</td>
+                                    <td>{{ product.collection | capitalize }}</td>
+                                    <td><img src="{{ asset('uploads/' ~ product.photo) }}" alt="{{ product.title }}" width="150" height="150" class="img-custom"></td>
+                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.stock }}</td>
+                                    <td>{{ product.createdAt | date('d/m/Y') }}</td>
+                                    <td>{{ product.updatedAt | date('d/m/Y') }}</td>
+                                    <td>
+                                        <a href="{{ path('update_product', {'id': product.id}) }}" class="btn btn-info" title="Modifier le produit"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="" class="btn btn-danger" title="Archiver le produit" onclick="return confirm('Cette action archivera le produit. Voulez-vous continuer ?')"><i class="bi bi-trash3"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
                     </table>
 
                 </div>

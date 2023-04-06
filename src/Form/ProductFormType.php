@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -43,7 +44,10 @@ class ProductFormType extends AbstractType
                     'Mixte' => 'mixte'
                 ]
             ])
-            ->add('photo')
+            ->add('photo', FileType::class, [
+                'label' => 'Photo',
+                'data_class' => null,
+            ])
             ->add('price', TextType::class, [
                 'label' => 'Prix du produit'
             ])
@@ -65,6 +69,7 @@ class ProductFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Product::class,
             'allow_file_upload' => true,
+            'photo' => null,
         ]);
     }
 }
