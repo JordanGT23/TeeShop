@@ -14,9 +14,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
+#[Route('/admin')]
 class ProductController extends AbstractController
 {
-    #[Route('/admin/ajouter-un-produit', name: 'create_product', methods: ['GET', 'POST'])]
+    #[Route('/ajouter-un-produit', name: 'create_product', methods: ['GET', 'POST'])]
     public function createProduct(Request $request, ProductRepository $repository, SluggerInterface $slugger): Response
     {
         $product = new Product();
@@ -83,6 +84,20 @@ class ProductController extends AbstractController
             'product' => $product
         ]);
     }
+
+    #[Route('/archiver-un-produit/{id}', name: 'soft_delete_product', methods:['GET'])]
+    public function softDeleteProduct(Product $product, ProductRepository $repository): Response
+    {
+        $product->setDeletedAt(new DateTime());
+
+        $repository->save($product, true);
+
+        $this->addFlash('success', "Le produit a bien été archivé");
+
+        return $this->redirectToRoute('show_dashboard');
+    }
+
+
 
 
     // ***********************************Private funtions***********************

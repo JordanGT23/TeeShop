@@ -61,7 +61,7 @@
                                     <td>{{ product.updatedAt | date('d/m/Y') }}</td>
                                     <td>
                                         <a href="{{ path('update_product', {'id': product.id}) }}" class="btn btn-info" title="Modifier le produit"><i class="bi bi-pencil-square"></i></a>
-                                        <a href="" class="btn btn-danger" title="Archiver le produit" onclick="return confirm('Cette action archivera le produit. Voulez-vous continuer ?')"><i class="bi bi-trash3"></i></a>
+                                        <a href="{{ path('soft_delete_product', {'id': product.id}) }}" class="btn btn-danger" title="Archiver le produit" onclick="return confirm('Cette action archivera le produit. Voulez-vous continuer ?')"><i class="bi bi-trash3"></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %}

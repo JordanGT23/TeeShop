@@ -13,7 +13,7 @@ class AdminController extends AbstractController
     public function showDashboard(ProductRepository $productRepository): Response
     {
 
-        $products = $productRepository->findAll();
+        $products = $productRepository->findBy(['deletedAt' => null]);
 
         return $this->render('admin/show_dashboard.html.twig', [
             'products' => $products,
